@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    if logged_in?
+      @tasks = current_user.tasks.order('created_at DESC').page(params[:page])
+    end
   end
 
   def show
@@ -51,5 +53,13 @@ class TasksController < ApplicationController
   
   def task_params
     params.require(:task).permit(:content, :status)
+  end
+  
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id])
+  end
+
+  def logged_in?
+    !!current_user
   end
 end
