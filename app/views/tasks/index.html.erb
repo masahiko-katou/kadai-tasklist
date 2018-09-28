@@ -3,8 +3,10 @@
 <h1>タスク一覧</h1>
 
 <ul>
+
+<%= render 'tasks/tasks' %>
   
-<% render 'tasks/tasks', tasks: @tasks %>
+<%= paginate @tasks %>
 
 </ul>
 
